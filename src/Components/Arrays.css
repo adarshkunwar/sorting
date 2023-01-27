@@ -1,0 +1,26 @@
+.array_list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.box {
+    background-color: red;
+    border: 2px solid black;
+    /* width: ; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 20px;
+    gap: 3px;
+}
+/* 
+.compare {
+    background-color: yellow;
+} */
+
+/* 
+ .notCompared {
+     background-color: red;
+} */
+ 
