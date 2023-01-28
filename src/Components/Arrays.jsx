@@ -4,7 +4,7 @@ import Layout from "./Layout/Layout";
 const Arrays = () => {
   const [array, setArray] = useState([]);
   const [sorting, setSorting] = useState(false);
-  const [SortingName, setSortingName] = useState("bubbleSort");
+  const [SortingName, setSortingName] = useState("insertionSort");
   const [count, setCount] = useState(0);
   const [compareIndexes, setCompareIndexes] = useState([]);
   // const [compare1, setCompare1] = useState();
@@ -24,6 +24,8 @@ const Arrays = () => {
       bubbleSort();
     } else if (SortingName === "selectionSort") {
       selectionSort();
+    } else if (SortingName === "insertionSort") {
+      InsertionSort();
     }
   };
 
@@ -71,6 +73,42 @@ const Arrays = () => {
       }
       setArray([...array]);
       // isSorted = false;
+    }
+    setSorting(false);
+  };
+  //Chat gpt code
+  // const InsertionSort = async () => {
+  //   setSorting(true);
+  //   let temp, j;
+  //   for (let i = 1; i < array.length; i++) {
+  //     temp = array[i];
+  //     j = i - 1;
+  //     while (j >= 0 && array[j] > temp) {
+  //       await new Promise((resolve) => setTimeout(resolve, 500));
+  //       setCompareIndexes([i, j]);
+  //       array[j + 1] = array[j];
+  //       j--;
+  //     }
+  //     array[j + 1] = temp;
+  //     setArray([...array]);
+  //   }
+  //   setSorting(false);
+  // };
+
+  const InsertionSort = async () => {
+    setSorting(true);
+    let newArray = [...array];
+    for (let i = 1; i < newArray.length; i++) {
+      for (let j = i; j > 0; j--) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setCompareIndexes([i, j]);
+        if (newArray[j] < newArray[j - 1]) {
+          let temp = newArray[j];
+          newArray[j] = newArray[j - 1];
+          newArray[j - 1] = temp;
+          setArray(newArray);
+        }
+      }
     }
     setSorting(false);
   };
