@@ -11,6 +11,9 @@ const Options = ({ setSortingName, sorting }) => {
     {
       sortName: "insertionSort",
     },
+    {
+      sortName: "shellSort",
+    },
   ];
   return (
     <div className="flex flex-col w-fit bg-blue-400 h-screen justify-evenly">
