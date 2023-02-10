@@ -3,18 +3,39 @@ import "./Arrays.css";
 import Layout from "./Layout/Layout";
 
 //Variables
-const numberOfArray = 1000;
+// const numberOfArray = 100;
 const maxValueForArray = 1000;
-const shortTime = 1; //bubble Sort, Selection Sort
-const LongTime = 50; //Insertion Sort
+// const shortTime = 1; //bubble Sort, Selection Sort
+// const LongTime = 50; //Insertion Sort
 
 const Arrays = () => {
   // Use States
+  const [timeOfSort, setTimeOfSort] = useState(10);
+  const [numberOfArray, setNumberOfArray] = useState(100);
   const [array, setArray] = useState([]);
   const [sorting, setSorting] = useState(false);
   const [SortingName, setSortingName] = useState("shellSort");
   const [count, setCount] = useState(0);
   const [compareIndexes, setCompareIndexes] = useState([]);
+
+  const range = () => {
+    let a = document.getElementById("ran").value;
+    // console.log(a);
+    let b = window.innerWidth * 0.185;
+    // console.log(b);
+    let calc = Math.floor((a / 100) * b);
+    // console.log(calc);
+    setNumberOfArray(calc);
+  };
+
+  const timeSort = () => {
+    let b = document.getElementById("tim").value;
+    if (b === 0) {
+      b = 1;
+    }
+    setTimeOfSort(b);
+    // setTimeOfSort(b + 1);
+  };
 
   //Create Array
   const createArray = () => {
@@ -52,7 +73,7 @@ const Arrays = () => {
           setTimeout(() => {
             setCompareIndexes([i, i + 1]);
             resolve();
-          }, shortTime)
+          }, timeOfSort)
         );
         if (array[i] > array[i + 1]) {
           let temp = array[i];
@@ -73,7 +94,7 @@ const Arrays = () => {
     for (let i = 0; i < array.length; i++) {
       let tempI = i;
       for (let j = i + 1; j < array.length; j++) {
-        await new Promise((resolve) => setTimeout(resolve, shortTime));
+        await new Promise((resolve) => setTimeout(resolve, timeOfSort));
         setCompareIndexes([i, j]);
         if (array[tempI] > array[j]) {
           tempI = j;
@@ -97,13 +118,13 @@ const Arrays = () => {
     let newArray = [...array];
     for (let i = 1; i < newArray.length; i++) {
       for (let j = i; j > 0; j--) {
-        await new Promise((resolve) => setTimeout(resolve, LongTime));
+        // await new Promise((resolve) => setTimeout(resolve, timeOfSort));
         setCompareIndexes([i, j]);
         if (newArray[j] < newArray[j - 1]) {
           let temp = newArray[j];
           newArray[j] = newArray[j - 1];
           newArray[j - 1] = temp;
-          setArray(newArray);
+          // setArray([...newArray]);
         }
       }
     }
@@ -119,7 +140,7 @@ const Arrays = () => {
       let i = 0,
         j = 0;
       while (i < left.length && j < right.length) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, timeOfSort));
 
         if (left[i] < right[j]) {
           result.push(left[i]);
@@ -172,11 +193,12 @@ const Arrays = () => {
         smallSort = true;
         isSorted = false;
         for (let i = 0; i + diff < max; i++) {
-          await new Promise((resolve) => setTimeout(resolve, 1));
+          await new Promise((resolve) => setTimeout(resolve, timeOfSort));
           let j = i + diff;
+          console.log(i, j);
           setCompareIndexes([i, j]);
           setCount((prev) => prev + 1);
-          console.log(i, j);
+          // console.log(i, j);
 
           if (array[i] > array[j]) {
             smallSort = false;
@@ -186,14 +208,14 @@ const Arrays = () => {
           }
         }
       }
-      console.error("it got out");
+      // console.error("it got out");
 
       if (diff === 1) {
         let checkNeeded = true;
         while (checkNeeded) {
           checkNeeded = false;
           console.log("its in 1");
-          for (let tempNum = 0; tempNum < max - 2; tempNum++) {
+          for (let tempNum = 0; tempNum < max - 1; tempNum++) {
             await new Promise((resolve) => setTimeout(resolve, 10));
             setCompareIndexes([tempNum, tempNum + 1]);
             setCount((prev) => prev + 1);
@@ -210,36 +232,30 @@ const Arrays = () => {
       if (diff > 1) {
         diff = Math.floor(diff / 2);
       }
-
-      // for (let j = mid; j > 0; j--) {
-      // if (!isSorted) {
-      //   let k = 1;
-      //   for (k = 0; k + j < max; k++) {
-      //     await new Promise((resolve) => setTimeout(resolve, 1));
-      //     let left = k;
-      //     let right = k + j;
-
-      //     setCompareIndexes([left, right]);
-      //     setCount((prev) => prev + 1);
-      //     if (array[left] > array[right]) {
-      //       let temp = array[left];
-      //       array[left] = array[right];
-      //       array[right] = temp;
-      //     }
-      //   }
-      //   if (j !== 1) {
-      //     j = Math.floor(j / 2);
-      //   }
-      // }
-      // }
-      // isSorted = true;
     }
   };
 
   // console.log(mergeSort());
+
   return (
     <Layout setSortingName={setSortingName} sorting={sorting}>
       <div>
+        <div className="flex">
+          <div className="flex flex-col">
+            <div>Array range</div>
+            <input type="range" name="array" id="ran" onInput={() => range()} />
+          </div>
+          <div className="flex flex-col">
+            <div> Sorting time</div>
+            <input
+              type="range"
+              value={timeOfSort}
+              name="time"
+              id="tim"
+              onInput={() => timeSort()}
+            />
+          </div>
+        </div>
         <div className="flex items-center">
           <div className="w-full">
             <div className="flex justify-center gap-20 pt-10">
@@ -253,24 +269,26 @@ const Arrays = () => {
             </div>
           </div>
         </div>
-        {array.map((val, i) => (
+        {/* {array.map((val, i) => (
           <span key={i}>{val} </span>
-        ))}
+        ))} */}
         <div>
           {count && <div> {count} </div>}
-          {array.map((val, i) => (
-            <div
-              key={i}
-              className={`box ${
-                compareIndexes[0] === i || compareIndexes[1] === i
-                  ? "compare"
-                  : "notCompared"
-              }`}
-              style={{ height: 6, width: val }}
-            >
-              {/* {val} */}
-            </div>
-          ))}
+          <div className="array_list">
+            {array.map((val, i) => (
+              <div
+                key={i}
+                className={`box ${
+                  compareIndexes[0] === i || compareIndexes[1] === i
+                    ? "compare"
+                    : "notCompared"
+                }`}
+                style={{ height: val * 0.5, width: 2 }}
+              >
+                {/* {val} */}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </Layout>
