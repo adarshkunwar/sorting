@@ -4,7 +4,7 @@ import Layout from "./Layout/Layout";
 
 //Variables
 // const numberOfArray = 100;
-const maxValueForArray = 1000;
+const maxValueForArray = 1200;
 // const shortTime = 1; //bubble Sort, Selection Sort
 // const LongTime = 50; //Insertion Sort
 
@@ -14,7 +14,7 @@ const Arrays = () => {
   const [numberOfArray, setNumberOfArray] = useState(100);
   const [array, setArray] = useState([]);
   const [sorting, setSorting] = useState(false);
-  const [SortingName, setSortingName] = useState("shellSort");
+  const [SortingName, setSortingName] = useState("bubbleSort");
   const [count, setCount] = useState(0);
   const [compareIndexes, setCompareIndexes] = useState([]);
 
@@ -118,13 +118,13 @@ const Arrays = () => {
     let newArray = [...array];
     for (let i = 1; i < newArray.length; i++) {
       for (let j = i; j > 0; j--) {
-        // await new Promise((resolve) => setTimeout(resolve, timeOfSort));
+        await new Promise((resolve) => setTimeout(resolve, timeOfSort));
         setCompareIndexes([i, j]);
         if (newArray[j] < newArray[j - 1]) {
           let temp = newArray[j];
           newArray[j] = newArray[j - 1];
           newArray[j - 1] = temp;
-          // setArray([...newArray]);
+          setArray([...newArray]);
         }
       }
     }
@@ -170,9 +170,9 @@ const Arrays = () => {
       return await merge(await split(left), await split(right));
     };
 
-    // return split(newArray);
-    // await split(newArray);
+    await split(newArray);
     setArray(await split(newArray));
+    return split(newArray);
   };
 
   const shellSort = async () => {
@@ -258,7 +258,7 @@ const Arrays = () => {
         </div>
         <div className="flex items-center">
           <div className="w-full">
-            <div className="flex justify-center gap-20 pt-10">
+            <div className="flex justify-center gap-20 pt-10 text-xl  ">
               <button onClick={createArray}>Create Array</button>
               <button
                 onClick={sortingOperation}

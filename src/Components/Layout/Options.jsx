@@ -16,11 +16,11 @@ const Options = ({ setSortingName, sorting }) => {
     },
   ];
   return (
-    <div className="flex flex-col w-fit bg-blue-400 h-screen justify-evenly">
+    <div className="flex flex-col w-fit bg-blue-400 px-0.5 h-screen justify-evenly">
       {options.map((val, i) => (
         <button
           key={i}
-          className={`cursor-pointer`}
+          className={`cursor-pointer hover:bg-white px-0.5 rounded-md  transition-all duration-100 text-lg`}
           onClick={() => setSortingName(val.sortName)}
           disabled={sorting}
         >
