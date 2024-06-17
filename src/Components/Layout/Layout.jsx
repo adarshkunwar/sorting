@@ -11,3 +11,4 @@ const Layout = ({ children, setSortingName, sorting }) => {
 };
 
 export default Layout;
+
