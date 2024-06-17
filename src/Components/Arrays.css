@@ -20,9 +20,8 @@
 
 .compare {
     background-color: yellow;
-} 
-
- .notCompared {
-     background-color: red;
 }
- 
+
+.notCompared {
+    background-color: red;
+}

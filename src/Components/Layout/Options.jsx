@@ -16,7 +16,7 @@ const Options = ({ setSortingName, sorting }) => {
     },
   ];
   return (
-    <div className="flex flex-col w-fit bg-blue-400 px-0.5 h-screen justify-evenly">
+    <div className="flex bg-blue-400 px-0.5 py-2 w-screen justify-evenly">
       {options.map((val, i) => (
         <button
           key={i}

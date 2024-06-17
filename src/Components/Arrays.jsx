@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import "./Arrays.css";
 import Layout from "./Layout/Layout";
 
-//Variables
-// const numberOfArray = 100;
 const maxValueForArray = 1200;
-// const shortTime = 1; //bubble Sort, Selection Sort
-// const LongTime = 50; //Insertion Sort
 
 const Arrays = () => {
-  // Use States
+  // State variables
   const [timeOfSort, setTimeOfSort] = useState(10);
   const [numberOfArray, setNumberOfArray] = useState(100);
   const [array, setArray] = useState([]);
@@ -18,26 +14,24 @@ const Arrays = () => {
   const [count, setCount] = useState(0);
   const [compareIndexes, setCompareIndexes] = useState([]);
 
+  // Handle range input change
   const range = () => {
     let a = document.getElementById("ran").value;
-    // console.log(a);
     let b = window.innerWidth * 0.185;
-    // console.log(b);
     let calc = Math.floor((a / 100) * b);
-    // console.log(calc);
     setNumberOfArray(calc);
   };
 
+  // Handle sorting time change
   const timeSort = () => {
     let b = document.getElementById("tim").value;
     if (b === 0) {
       b = 1;
     }
     setTimeOfSort(b);
-    // setTimeOfSort(b + 1);
   };
 
-  //Create Array
+  // Create new array
   const createArray = () => {
     let newArray = [];
     setCount(0);
@@ -47,22 +41,30 @@ const Arrays = () => {
     setArray(newArray);
   };
 
-  // Sorting Operations
+  // Perform sorting operation based on selected sort type
   const sortingOperation = () => {
-    if (SortingName === "bubbleSort") {
-      bubbleSort();
-    } else if (SortingName === "selectionSort") {
-      selectionSort();
-    } else if (SortingName === "insertionSort") {
-      InsertionSort();
-    } else if (SortingName === "mergeSort") {
-      mergeSort();
-    } else if (SortingName === "shellSort") {
-      shellSort();
+    switch (SortingName) {
+      case "bubbleSort":
+        bubbleSort();
+        break;
+      case "selectionSort":
+        selectionSort();
+        break;
+      case "insertionSort":
+        InsertionSort();
+        break;
+      case "mergeSort":
+        mergeSort();
+        break;
+      case "shellSort":
+        shellSort();
+        break;
+      default:
+        break;
     }
   };
 
-  //Bubble Sort
+  // Bubble Sort
   const bubbleSort = async () => {
     setSorting(true);
     let isSorted = false;
@@ -88,7 +90,7 @@ const Arrays = () => {
     setSorting(false);
   };
 
-  //Selection Sort
+  // Selection Sort
   const selectionSort = async () => {
     setSorting(true);
     for (let i = 0; i < array.length; i++) {
@@ -107,12 +109,11 @@ const Arrays = () => {
         array[tempI] = temp;
       }
       setArray([...array]);
-      // isSorted = false;
     }
     setSorting(false);
   };
 
-  //Insertion Sort
+  // Insertion Sort
   const InsertionSort = async () => {
     setSorting(true);
     let newArray = [...array];
@@ -131,7 +132,7 @@ const Arrays = () => {
     setSorting(false);
   };
 
-  // Merge sort
+  // Merge Sort
   const mergeSort = async () => {
     const newArray = [...array];
 
@@ -141,7 +142,6 @@ const Arrays = () => {
         j = 0;
       while (i < left.length && j < right.length) {
         await new Promise((resolve) => setTimeout(resolve, timeOfSort));
-
         if (left[i] < right[j]) {
           result.push(left[i]);
           i++;
@@ -158,7 +158,6 @@ const Arrays = () => {
         result.push(right[j]);
         j++;
       }
-      console.log(result);
       return result;
     };
 
@@ -175,17 +174,15 @@ const Arrays = () => {
     return split(newArray);
   };
 
+  // Shell Sort
   const shellSort = async () => {
     const newArray = [...array];
-
     let max = Math.floor(newArray.length);
     let mid = Math.floor(max / 2);
-
     let isSorted = false;
     let diff = mid;
-    while (!isSorted && diff > 0) {
-      // console.log("shellSort");
 
+    while (!isSorted && diff > 0) {
       isSorted = true;
       let smallSort = false;
 
@@ -195,11 +192,8 @@ const Arrays = () => {
         for (let i = 0; i + diff < max; i++) {
           await new Promise((resolve) => setTimeout(resolve, timeOfSort));
           let j = i + diff;
-          console.log(i, j);
           setCompareIndexes([i, j]);
           setCount((prev) => prev + 1);
-          // console.log(i, j);
-
           if (array[i] > array[j]) {
             smallSort = false;
             let temp = array[i];
@@ -208,13 +202,11 @@ const Arrays = () => {
           }
         }
       }
-      // console.error("it got out");
 
       if (diff === 1) {
         let checkNeeded = true;
         while (checkNeeded) {
           checkNeeded = false;
-          console.log("its in 1");
           for (let tempNum = 0; tempNum < max - 1; tempNum++) {
             await new Promise((resolve) => setTimeout(resolve, 10));
             setCompareIndexes([tempNum, tempNum + 1]);
@@ -225,7 +217,6 @@ const Arrays = () => {
               array[tempNum] = array[tempNum + 1];
               array[tempNum + 1] = temp;
             }
-            // isSorted = true;
           }
         }
       }
@@ -235,15 +226,13 @@ const Arrays = () => {
     }
   };
 
-  // console.log(mergeSort());
-
   return (
     <Layout setSortingName={setSortingName} sorting={sorting}>
       <div>
-        <div className="flex">
+        <div className="flex py-2 justify-around">
           <div className="flex flex-col">
             <div>Array range</div>
-            <input type="range" name="array" id="ran" onInput={() => range()} />
+            <input type="range" name="array" id="ran" onInput={range} />
           </div>
           <div className="flex flex-col">
             <div> Sorting time</div>
@@ -252,13 +241,13 @@ const Arrays = () => {
               value={timeOfSort}
               name="time"
               id="tim"
-              onInput={() => timeSort()}
+              onInput={timeSort}
             />
           </div>
         </div>
         <div className="flex items-center">
           <div className="w-full">
-            <div className="flex justify-center gap-20 pt-10 text-xl  ">
+            <div className="flex justify-center gap-20 pt-10 text-xl">
               <button onClick={createArray}>Create Array</button>
               <button
                 onClick={sortingOperation}
@@ -269,24 +258,16 @@ const Arrays = () => {
             </div>
           </div>
         </div>
-        {/* {array.map((val, i) => (
-          <span key={i}>{val} </span>
-        ))} */}
         <div>
-          {count && <div> {count} </div>}
+          {count && <div>Operations: {count}</div>}
           <div className="array_list">
             {array.map((val, i) => (
               <div
                 key={i}
-                className={`box ${
-                  compareIndexes[0] === i || compareIndexes[1] === i
-                    ? "compare"
-                    : "notCompared"
-                }`}
+                className={`box ${compareIndexes.includes(i) ? "compare" : "notCompared"
+                  }`}
                 style={{ height: val * 0.5, width: 2 }}
-              >
-                {/* {val} */}
-              </div>
+              ></div>
             ))}
           </div>
         </div>
